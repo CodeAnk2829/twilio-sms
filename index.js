@@ -13,13 +13,15 @@ const client = require("twilio")(accountSid, authToken);
 const sender = process.env.TWILIO_FROM;
 
 app.post("/notify", async (req, res) => {
-  console.log(req.body);
-  const { recipients } = req.body;
+  const json = JSON.stringify(req.body);
+  const { recipients } = JSON.parse(json);
+  console.log(recipients)
+
 
   recipients.forEach((recipient) => {
     client.messages
       .create({
-        body: "Hi, Response from twilio-sm render",
+        body: "Hi, from curl",
         from: sender,
         to: recipient,
       })
@@ -31,7 +33,7 @@ app.post("/notify", async (req, res) => {
       });
   });
   return res.json({
-    recipients,
+    ok: true
   });
 });
 
