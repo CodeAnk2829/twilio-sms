@@ -13,6 +13,7 @@ const client = require("twilio")(accountSid, authToken);
 const sender = process.env.TWILIO_FROM;
 
 app.post("/notify", async (req, res) => {
+  console.log(req.body);
   const { recipients } = req.body;
 
   recipients.forEach((recipient) => {
@@ -30,7 +31,7 @@ app.post("/notify", async (req, res) => {
       });
   });
   return res.json({
-    recipients
+    recipients,
   });
 });
 
