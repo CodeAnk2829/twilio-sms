@@ -5,21 +5,20 @@ const cors = require("cors");
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors());
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 const sender = process.env.TWILIO_FROM;
 
 app.post("/notify", async (req, res) => {
-
-const { recipients } = req.body;
+  const { recipients } = req.body;
 
   recipients.forEach((recipient) => {
     client.messages
       .create({
-        body: "Hello from Maulana Azad National Insitute of Technolgy",
+        body: "Hi, Response from twilio-sm render",
         from: sender,
         to: recipient,
       })
@@ -31,7 +30,7 @@ const { recipients } = req.body;
       });
   });
   return res.json({
-    msg: "ok",
+    msg: "Message sent successfully"
   });
 });
 
