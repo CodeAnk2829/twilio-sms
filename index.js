@@ -14,14 +14,15 @@ const sender = process.env.TWILIO_FROM;
 
 app.post("/notify", async (req, res) => {
   const json = JSON.stringify(req.body);
-  const { recipients } = JSON.parse(json);
+  const { recipients, messageToBeSent } = JSON.parse(json);
   console.log(recipients)
+  console.log(messageToBeSent);
 
 
   recipients.forEach((recipient) => {
     client.messages
       .create({
-        body: "Hi, from curl",
+        body: `${messageToBeSent}`,
         from: sender,
         to: recipient,
       })
